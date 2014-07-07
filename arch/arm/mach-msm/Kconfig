@@ -4951,9 +4951,3 @@ config FORCE_FAST_CHARGE
 		are detected as USB to charge as AC.	
 
 endif
-
-config INTELLI_PLUG
-	bool "Enable intelli-plug cpu hotplug driver"
-	default n
-	help
-	  Generic Intelli-plug cpu hotplug driver for ARM SOCs
