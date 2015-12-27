@@ -171,6 +171,11 @@ static int ecryptfs_interpose(struct dentry *lower_dentry,
 	}
 #endif
 
+			crypt_stat->engine_id = parent_crypt_stat->engine_id;
+		}
+	}
+#endif
+
 	return 0;
 }
 
@@ -570,6 +575,9 @@ static int ecryptfs_lookup_interpose(struct dentry *dentry,
 	}
 #endif
 
+	}
+#endif
+
 	if (inode->i_state & I_NEW)
 		unlock_new_inode(inode);
 	d_add(dentry, inode);
@@ -862,6 +870,31 @@ ecryptfs_rename(struct inode *old_dir, struct dentry *old_dentry,
 	    }
 		rename_event |= ECRYPTFS_EVT_RENAME_OUT_OF_CHAMBER;
 	}
+
+	if(!IS_SENSITIVE_DENTRY(old_dentry->d_parent) &&
+			IS_SENSITIVE_DENTRY(new_dentry->d_parent))
+		rename_event |= ECRYPTFS_EVT_RENAME_TO_CHAMBER;
+#endif
+
+
+	if(IS_SENSITIVE_DENTRY(old_dentry->d_parent)) {
+	    if(ecryptfs_is_sdp_locked(parent_crypt_stat->engine_id)) {
+			printk("Rename/move trial in locked state\n");
+			return -EIO;
+		}
+	}
+
+	if(IS_SENSITIVE_DENTRY(old_dentry->d_parent) &&
+			IS_SENSITIVE_DENTRY(new_dentry->d_parent)) {
+		if(parent_crypt_stat->engine_id != new_parent_crypt_stat->engine_id) {
+	        printk("Can't move between chambers\n");
+			return -EIO;
+		}
+	}
+
+	if(IS_SENSITIVE_DENTRY(old_dentry->d_parent) &&
+			!IS_SENSITIVE_DENTRY(new_dentry->d_parent))		
+		rename_event |= ECRYPTFS_EVT_RENAME_OUT_OF_CHAMBER;
 
 	if(!IS_SENSITIVE_DENTRY(old_dentry->d_parent) &&
 			IS_SENSITIVE_DENTRY(new_dentry->d_parent))
