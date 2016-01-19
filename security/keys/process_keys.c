@@ -806,6 +806,7 @@ long join_session_keyring(const char *name)
 	} else if (IS_ERR(keyring)) {
 		ret = PTR_ERR(keyring);
 		goto error2;
+		key_put(keyring);
 	}
 
 	/* we've got a keyring - now to install it */
