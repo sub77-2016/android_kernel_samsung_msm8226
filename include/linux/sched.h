@@ -1399,7 +1399,7 @@ struct task_struct {
 
 	cputime_t utime, stime, utimescaled, stimescaled;
 	cputime_t gtime;
-#ifndef CONFIG_VIRT_CPU_ACCOUNTING
+	unsigned long long cpu_power;
 	cputime_t prev_utime, prev_stime;
 #endif
 	unsigned long nvcsw, nivcsw; /* context switch counts */

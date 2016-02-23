@@ -16,7 +16,7 @@
 #include <linux/threads.h>
 #include <linux/kobject.h>
 #include <linux/sysfs.h>
-#include <linux/completion.h>
+#include <asm/cputime.h>
 #include <linux/workqueue.h>
 #include <linux/cpumask.h>
 #include <asm/div64.h>
@@ -501,5 +501,11 @@ void cpufreq_frequency_table_get_attr(struct cpufreq_frequency_table *table,
 
 void cpufreq_frequency_table_put_attr(unsigned int cpu);
 
+
+/*********************************************************************
+ *                         CPUFREQ STATS                             *
+ *********************************************************************/
+
+void acct_update_power(struct task_struct *p, cputime_t cputime);
 
 #endif /* _LINUX_CPUFREQ_H */
