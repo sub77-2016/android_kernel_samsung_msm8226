@@ -172,7 +172,7 @@ static ssize_t pmic8xxx_debounce_store(struct device *dev,
 	return size;
 }
 
-static DEVICE_ATTR(debounce_us, 0664, NULL, pmic8xxx_debounce_store);
+static DEVICE_ATTR(debounce_us, S_IWUSR|S_IWGRP, NULL, pmic8xxx_debounce_store);
 
 static int __devinit pmic8xxx_pwrkey_probe(struct platform_device *pdev)
 {

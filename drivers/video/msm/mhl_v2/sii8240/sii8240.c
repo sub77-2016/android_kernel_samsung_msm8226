@@ -5383,6 +5383,7 @@ static struct i2c_driver sii8240_cbus_i2c_driver = {
 };
 #endif
 
+static DEVICE_ATTR(mhl_version, S_IRUGO, sii8240_rda_mhl_version, NULL);
 static int __init sii8240_init(void)
 {
 	int ret;

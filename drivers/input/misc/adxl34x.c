@@ -478,7 +478,7 @@ static ssize_t adxl34x_disable_store(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(disable, 0664, adxl34x_disable_show, adxl34x_disable_store);
+static DEVICE_ATTR(disable, S_IRUGO|S_IWUSR, adxl34x_disable_show, adxl34x_disable_store);
 
 static ssize_t adxl34x_calibrate_show(struct device *dev,
 				      struct device_attribute *attr, char *buf)
@@ -525,7 +525,7 @@ static ssize_t adxl34x_calibrate_store(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(calibrate, 0664,
+static DEVICE_ATTR(calibrate, S_IRUGO|S_IWUSR|S_IWGRP,
 		   adxl34x_calibrate_show, adxl34x_calibrate_store);
 
 static ssize_t adxl34x_rate_show(struct device *dev,
@@ -560,7 +560,7 @@ static ssize_t adxl34x_rate_store(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(rate, 0664, adxl34x_rate_show, adxl34x_rate_store);
+static DEVICE_ATTR(rate, S_IRUGO|S_IWUSR|S_IWGRP, adxl34x_rate_show, adxl34x_rate_store);
 
 static ssize_t adxl34x_autosleep_show(struct device *dev,
 				 struct device_attribute *attr, char *buf)
@@ -598,7 +598,7 @@ static ssize_t adxl34x_autosleep_store(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(autosleep, 0664,
+static DEVICE_ATTR(autosleep, S_IRUGO|S_IWUSR|S_IWGRP,
 		   adxl34x_autosleep_show, adxl34x_autosleep_store);
 
 static ssize_t adxl34x_position_show(struct device *dev,
@@ -640,7 +640,7 @@ static ssize_t adxl34x_write_store(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(write, 0664, NULL, adxl34x_write_store);
+static DEVICE_ATTR(write, S_IWUSR|S_IWGRP, NULL, adxl34x_write_store);
 #endif
 
 static struct attribute *adxl34x_attributes[] = {

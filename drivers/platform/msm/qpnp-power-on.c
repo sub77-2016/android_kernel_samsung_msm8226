@@ -219,6 +219,7 @@ qpnp_pon_masked_write(struct qpnp_pon *pon, u16 addr, u8 mask, u8 val)
 	return rc;
 }
 
+static DEVICE_ATTR(debounce_us, S_IRUGO|S_IWUSR|S_IWGRP, qpnp_pon_dbc_show, qpnp_pon_dbc_store);
 /**
  * qpnp_pon_system_pwr_off - Configure system-reset PMIC for shutdown or reset
  * @type: Determines the type of power off to perform - shutdown, reset, etc
@@ -1310,7 +1311,7 @@ static ssize_t  sysfs_powerkey_onoff_show(struct device *dev,
 		return snprintf(buf, 5, "%d\n", pon->powerkey_state);
 	}
 }
-static DEVICE_ATTR(sec_powerkey_pressed, 0664 , sysfs_powerkey_onoff_show, NULL);
+static DEVICE_ATTR(sec_powerkey_pressed, S_IRUGO , sysfs_powerkey_onoff_show, NULL);
 
 #ifdef CONFIG_SEC_PM_DEBUG
 static int qpnp_wake_enabled(const char *val, const struct kernel_param *kp)

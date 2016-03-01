@@ -910,30 +910,28 @@ static ssize_t earjack_state_onoff_show(struct device *dev,	struct device_attrib
 #endif
 
 #if !defined(CONFIG_MUIC_MAX77804K_SUPPORT_CAR_DOCK)
-static DEVICE_ATTR(apo_factory, 0664,
+static DEVICE_ATTR(apo_factory, S_IRUGO|S_IWUSR|S_IWGRP,
 		max77804k_muic_show_apo_factory,
 		max77804k_muic_set_apo_factory);
 #endif /* !CONFIG_MUIC_MAX77804K_SUPPORT_CAR_DOCK */
-#if defined(CONFIG_MUIC_SUPPORT_MMD_CTL)
-static DEVICE_ATTR(mmd_en, 0664, max77804k_muic_show_mmd_en, max77804k_muic_set_mmd_en);
+static DEVICE_ATTR(chg_type, S_IRUGO, max77804k_muic_show_charger_type, NULL);
+static DEVICE_ATTR(uart_sel, S_IRUGO|S_IWUSR|S_IWGRP, max77804k_muic_show_uart_sel,
 #endif
-static DEVICE_ATTR(chg_type, 0664, max77804k_muic_show_charger_type, NULL);
-static DEVICE_ATTR(uart_sel, 0664, max77804k_muic_show_uart_sel,
 		max77804k_muic_set_uart_sel);
 #if defined(CONFIG_MUIC_SUPPORT_RUSTPROOF)
-static DEVICE_ATTR(uart_en, 0664, max77804k_muic_show_uart_en,
+static DEVICE_ATTR(uart_en, S_IRUGO|S_IWUSR|S_IWGRP, max77804k_muic_show_uart_en,
 		max77804k_muic_set_uart_en);
 #endif
 static DEVICE_ATTR(usb_state, S_IRUGO, max77804k_muic_show_usb_state, NULL);
 static DEVICE_ATTR(attached_dev, S_IRUGO, max77804k_muic_show_attached_dev, NULL);
-static DEVICE_ATTR(usb_sel, 0664,
+static DEVICE_ATTR(usb_sel, S_IRUGO|S_IWUSR|S_IWGRP,
 		max77804k_muic_show_manualsw, max77804k_muic_set_manualsw);
 static DEVICE_ATTR(adc, S_IRUGO, max77804k_muic_show_adc, NULL);
-static DEVICE_ATTR(audio_path, 0664,
+static DEVICE_ATTR(audio_path, S_IRUGO|S_IWUSR|S_IWGRP,
 		max77804k_muic_show_audio_path, max77804k_muic_set_audio_path);
-static DEVICE_ATTR(otg_test, 0664,
+static DEVICE_ATTR(otg_test, S_IRUGO|S_IWUSR|S_IWGRP,
 		max77804k_muic_show_otg_test, max77804k_muic_set_otg_test);
-static DEVICE_ATTR(adc_debounce_time, 0664,
+static DEVICE_ATTR(adc_debounce_time, S_IRUGO,
 		max77804k_muic_show_adc_debounce_time,
 		NULL);
 #if defined(CONFIG_MUIC_DET_JACK)

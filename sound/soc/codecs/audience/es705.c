@@ -933,7 +933,7 @@ static ssize_t es705_route_status_show(struct device *dev,
 	return ret;
 }
 
-static DEVICE_ATTR(route_status, 0444, es705_route_status_show, NULL);
+static DEVICE_ATTR(route_status, S_IRUGO, es705_route_status_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/route_status */
 
 static ssize_t es705_route_show(struct device *dev,
@@ -948,7 +948,7 @@ static ssize_t es705_route_show(struct device *dev,
 			es705->internal_route_num);
 }
 
-static DEVICE_ATTR(route, 0444, es705_route_show, NULL);
+static DEVICE_ATTR(route, S_IRUGO, es705_route_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/route */
 
 static ssize_t es705_rate_show(struct device *dev,
@@ -962,7 +962,7 @@ static ssize_t es705_rate_show(struct device *dev,
 			es705->internal_rate);
 }
 
-static DEVICE_ATTR(rate, 0444, es705_rate_show, NULL);
+static DEVICE_ATTR(rate, S_IRUGO, es705_rate_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/rate */
 
 #define SIZE_OF_VERBUF 256
@@ -993,7 +993,7 @@ static ssize_t es705_fw_version_show(struct device *dev,
 	return snprintf(buf, PAGE_SIZE, "FW Version = %s\n", versionbuffer);
 }
 
-static DEVICE_ATTR(fw_version, 0444, es705_fw_version_show, NULL);
+static DEVICE_ATTR(fw_version, S_IRUGO, es705_fw_version_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/fw_version */
 
 static ssize_t es705_clock_on_show(struct device *dev,
@@ -1005,7 +1005,7 @@ static ssize_t es705_clock_on_show(struct device *dev,
 	return ret;
 }
 
-static DEVICE_ATTR(clock_on, 0444, es705_clock_on_show, NULL);
+static DEVICE_ATTR(clock_on, S_IRUGO, es705_clock_on_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/clock_on */
 
 static ssize_t es705_vs_keyword_parameters_show(struct device *dev,
@@ -1047,7 +1047,7 @@ static ssize_t es705_vs_keyword_parameters_set(struct device *dev,
 	return ret;
 }
 
-static DEVICE_ATTR(vs_keyword_parameters, 0644,
+static DEVICE_ATTR(vs_keyword_parameters, S_IRUGO|S_IWUSR,
 		   es705_vs_keyword_parameters_show,
 		   es705_vs_keyword_parameters_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/vs_keyword_parameters */
@@ -1075,7 +1075,7 @@ static ssize_t es705_vs_status_show(struct device *dev,
 	return ret;
 }
 
-static DEVICE_ATTR(vs_status, 0444, es705_vs_status_show, NULL);
+static DEVICE_ATTR(vs_status, S_IRUGO, es705_vs_status_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/vs_status */
 
 static ssize_t es705_ping_status_show(struct device *dev,
@@ -1114,7 +1114,7 @@ static ssize_t es705_ping_status_show(struct device *dev,
 	return rc;
 }
 
-static DEVICE_ATTR(ping_status, 0444, es705_ping_status_show, NULL);
+static DEVICE_ATTR(ping_status, S_IRUGO, es705_ping_status_show, NULL);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/ping_status */
 
 static ssize_t es705_gpio_reset_set(struct device *dev,
@@ -1130,7 +1130,7 @@ static ssize_t es705_gpio_reset_set(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(gpio_reset, 0644, NULL, es705_gpio_reset_set);
+static DEVICE_ATTR(gpio_reset, S_IWUSR, NULL, es705_gpio_reset_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/gpio_reset */
 
 
@@ -1160,7 +1160,7 @@ static ssize_t es705_overlay_mode_set(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(overlay_mode, 0644, NULL, es705_overlay_mode_set);
+static DEVICE_ATTR(overlay_mode, S_IWUSR, NULL, es705_overlay_mode_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/overlay_mode */
 
 static ssize_t es705_vs_event_set(struct device *dev,
@@ -1183,7 +1183,7 @@ static ssize_t es705_vs_event_set(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(vs_event, 0644, NULL, es705_vs_event_set);
+static DEVICE_ATTR(vs_event, S_IWUSR, NULL, es705_vs_event_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/vs_event */
 
 static ssize_t es705_tuning_set(struct device *dev,
@@ -1204,7 +1204,7 @@ static ssize_t es705_tuning_set(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(tuning, 0644, NULL, es705_tuning_set);
+static DEVICE_ATTR(tuning, S_IWUSR, NULL, es705_tuning_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/tuning */
 #define PATH_SIZE 100
 static ssize_t es705_keyword_grammar_path_set(struct device *dev,
@@ -1247,7 +1247,7 @@ static ssize_t es705_keyword_grammar_path_set(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(keyword_grammar_path, 0664, NULL, es705_keyword_grammar_path_set);
+static DEVICE_ATTR(keyword_grammar_path, S_IWUSR, NULL, es705_keyword_grammar_path_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/keyword_grammar_path */
 
 static ssize_t es705_keyword_net_path_set(struct device *dev,
@@ -1290,7 +1290,7 @@ static ssize_t es705_keyword_net_path_set(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(keyword_net_path, 0664, NULL, es705_keyword_net_path_set);
+static DEVICE_ATTR(keyword_net_path, S_IWUSR, NULL, es705_keyword_net_path_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/keyword_net_path */
 static ssize_t es705_sleep_delay_show(struct device *dev,
 					struct device_attribute *attr,
@@ -1311,7 +1311,7 @@ static ssize_t es705_sleep_delay_set(struct device *dev,
 		__func__, es705_priv.sleep_delay);
 	return count;
 }
-static DEVICE_ATTR(sleep_delay, 0644, es705_sleep_delay_show, es705_sleep_delay_set);
+static DEVICE_ATTR(sleep_delay, S_IRUGO|S_IWUSR, es705_sleep_delay_show, es705_sleep_delay_set);
 /* /sys/devices/platform/msm_slim_ctrl.1/es705-codec-gen0/sleep_delay */
 
 #if defined(PREVENT_CALL_MUTE_WHEN_SWITCH_NB_AND_WB)
@@ -1334,7 +1334,7 @@ static ssize_t es705_reroute_delay_set(struct device *dev,
 		__func__, es705_priv.reroute_delay);
 	return count;
 }
-static DEVICE_ATTR(reroute_delay, 0644, es705_reroute_delay_show, es705_reroute_delay_set);
+static DEVICE_ATTR(reroute_delay, S_IRUGO|S_IWUSR, es705_reroute_delay_show, es705_reroute_delay_set);
 #endif
 
 #ifdef SAMSUNG_ES70X_BACK_TO_BACK_CMD_DELAY		
@@ -1357,7 +1357,7 @@ static ssize_t es705_preset_delay_time_set(struct device *dev,
 		__func__, preset_delay_time);
 	return count;
 }
-static DEVICE_ATTR(preset_delay, 0644, es705_preset_delay_time_show, es705_preset_delay_time_set);
+static DEVICE_ATTR(preset_delay, S_IRUGO|S_IWUSR, es705_preset_delay_time_show, es705_preset_delay_time_set);
 #endif
 
 static ssize_t es705_veq_filter_set(struct device *dev,
@@ -1516,6 +1516,7 @@ extern unsigned int system_rev;
 #define UART_DOWNLOAD_WAKEUP_HWREV 0
 #else
 #define UART_DOWNLOAD_WAKEUP_HWREV 6 /* HW rev0.7 */
+static DEVICE_ATTR(keyword_type, S_IRUGO|S_IWUSR, es705_keyword_type_show, es705_keyword_type_set);
 #endif
 
 static int es705_fw_download(struct es705_priv *es705, int fw_type)

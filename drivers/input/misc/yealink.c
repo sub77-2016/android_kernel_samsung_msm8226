@@ -768,6 +768,7 @@ static ssize_t store_ringtone(struct device *dev,
 #define _M444	S_IRUGO
 #define _M664	S_IRUGO|S_IWUSR|S_IWGRP
 #define _M220	S_IWUSR|S_IWGRP
+// lol, who came up with this ^ v
 
 static DEVICE_ATTR(map_seg7	, _M664, show_map	, store_map	);
 static DEVICE_ATTR(line1	, _M664, show_line1	, store_line1	);

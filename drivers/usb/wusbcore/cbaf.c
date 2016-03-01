@@ -353,7 +353,7 @@ static ssize_t cbaf_wusb_chid_store(struct device *dev,
 		return result;
 	return size;
 }
-static DEVICE_ATTR(wusb_chid, 0600, cbaf_wusb_chid_show, cbaf_wusb_chid_store);
+static DEVICE_ATTR(wusb_chid, S_IWUSR|S_IRUSR, cbaf_wusb_chid_show, cbaf_wusb_chid_store);
 
 static ssize_t cbaf_wusb_host_name_show(struct device *dev,
 					struct device_attribute *attr,
@@ -379,7 +379,7 @@ static ssize_t cbaf_wusb_host_name_store(struct device *dev,
 
 	return size;
 }
-static DEVICE_ATTR(wusb_host_name, 0600, cbaf_wusb_host_name_show,
+static DEVICE_ATTR(wusb_host_name, S_IWUSR|S_IRUSR, cbaf_wusb_host_name_show,
 					 cbaf_wusb_host_name_store);
 
 static ssize_t cbaf_wusb_host_band_groups_show(struct device *dev,
@@ -410,7 +410,7 @@ static ssize_t cbaf_wusb_host_band_groups_store(struct device *dev,
 	return size;
 }
 
-static DEVICE_ATTR(wusb_host_band_groups, 0600,
+static DEVICE_ATTR(wusb_host_band_groups, S_IWUSR|S_IRUSR,
 		   cbaf_wusb_host_band_groups_show,
 		   cbaf_wusb_host_band_groups_store);
 
@@ -462,7 +462,7 @@ static ssize_t cbaf_wusb_cdid_store(struct device *dev,
 
 	return size;
 }
-static DEVICE_ATTR(wusb_cdid, 0600, cbaf_wusb_cdid_show, cbaf_wusb_cdid_store);
+static DEVICE_ATTR(wusb_cdid, S_IWUSR|S_IRUSR, cbaf_wusb_cdid_show, cbaf_wusb_cdid_store);
 
 static ssize_t cbaf_wusb_device_band_groups_show(struct device *dev,
 						 struct device_attribute *attr,
@@ -474,7 +474,7 @@ static ssize_t cbaf_wusb_device_band_groups_show(struct device *dev,
 	return scnprintf(buf, PAGE_SIZE, "0x%04x\n", cbaf->device_band_groups);
 }
 
-static DEVICE_ATTR(wusb_device_band_groups, 0600,
+static DEVICE_ATTR(wusb_device_band_groups, S_IRUSR,
 		   cbaf_wusb_device_band_groups_show,
 		   NULL);
 
@@ -487,7 +487,7 @@ static ssize_t cbaf_wusb_device_name_show(struct device *dev,
 
 	return scnprintf(buf, PAGE_SIZE, "%s\n", cbaf->device_name);
 }
-static DEVICE_ATTR(wusb_device_name, 0600, cbaf_wusb_device_name_show, NULL);
+static DEVICE_ATTR(wusb_device_name, S_IRUSR, cbaf_wusb_device_name_show, NULL);
 
 static const struct wusb_cbaf_cc_data cbaf_cc_data_defaults = {
 	.AssociationTypeId_hdr    = WUSB_AR_AssociationTypeId,
@@ -571,7 +571,7 @@ static ssize_t cbaf_wusb_ck_store(struct device *dev,
 
 	return size;
 }
-static DEVICE_ATTR(wusb_ck, 0600, NULL, cbaf_wusb_ck_store);
+static DEVICE_ATTR(wusb_ck, S_IWUSR, NULL, cbaf_wusb_ck_store);
 
 static struct attribute *cbaf_dev_attrs[] = {
 	&dev_attr_wusb_host_name.attr,
