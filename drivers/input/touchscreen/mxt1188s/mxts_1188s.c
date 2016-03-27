@@ -34,6 +34,10 @@
 #include <linux/of_gpio.h>
 #include <linux/regulator/consumer.h>
 #include <linux/qpnp/pin.h>
+#ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
+#include <linux/input/sweep2wake.h>
+#include <linux/input/doubletap2wake.h>
+#endif
 
 static int mxt_power_onoff(struct mxt_data *data, bool enabled);
 
@@ -2764,12 +2768,23 @@ static int mxt_suspend(struct device *dev)
 	struct i2c_client *client = to_i2c_client(dev);
 	struct mxt_data *data = i2c_get_clientdata(client);
 
+#ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
+	if ((s2w_switch > 0) || (dt2w_switch > 0)) {
+		pr_info("suspend avoided!\n");
+		return 0;
+	} else {
+#endif
+
 	mutex_lock(&data->input_dev->mutex);
 
 	if (data->input_dev->users)
 		mxt_stop(data);
 
 	mutex_unlock(&data->input_dev->mutex);
+#ifdef CONFIG_TOUCHSCREEN_PREVENT_SLEEP
+	}
+#endif
+
 	return 0;
 }
 
