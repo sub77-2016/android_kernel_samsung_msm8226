@@ -247,7 +247,6 @@ struct ecryptfs_crypt_stat {
 #define ECRYPTFS_DEK_IS_SENSITIVE     0x00200000
 #define ECRYPTFS_SDP_IS_CHAMBER_DIR   0x02000000
 #endif
-#endif
 
 	u32 flags;
 	unsigned int file_version;

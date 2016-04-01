@@ -540,14 +540,6 @@ static int ecryptfs_parse_options(struct ecryptfs_sb_info *sbi, char *options,
             printk("%s : partition_id : %d", __func__, mount_crypt_stat->partition_id);
 		}
 		break;
-		case ecryptfs_opt_partition_id: {
-            char *partition_id_str = args[0].from;
-            mount_crypt_stat->partition_id =
-                (int)simple_strtol(partition_id_str,
-                           &partition_id_str, 0);
-            printk("%s : partition_id : %d", __func__, mount_crypt_stat->partition_id);
-		}
-		break;
 #endif
 		case ecryptfs_opt_err:
 		default:
