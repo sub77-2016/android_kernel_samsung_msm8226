@@ -8,6 +8,7 @@ BUILD_KERNEL_DIR=$(pwd)
 
 echo "Define YOUR OWN cross compile path"
 BUILD_CROSS_COMPILE=/roms/toolchains/arm-eabi-4.9-uber/bin/arm-eabi-
+STRIP=${BUILD_CROSS_COMPILE}strip
 BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 KERNEL_DEFCONFIG=msm8226-sec_defconfig
@@ -67,6 +68,23 @@ case $1 in
 		BUILD_KERNEL_OUT_DIR=$BUILD_TOP_DIR/okernel/*$2
 		echo "remove kernel out directory $BUILD_KERNEL_OUT_DIR"
 		rm $BUILD_KERNEL_OUT_DIR -rf
+		exit 1
+		;;
+
+		mkboot)
+		echo "Make boot.img"
+		RAMDISKDIR=/kernel/Ramdisks/$2/ramdisk
+		PACKAGEDIR=/kernel/Ramdisks/$2/pack
+		rm -rf $PACKAGEDIR/system/lib/modules/
+		cp -r /kernel/mkernel/$2/ $PACKAGEDIR/system/lib/modules/
+		CMD_LINE='console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37'
+		~/bin/mkbootfs $RAMDISKDIR | gzip > $PACKAGEDIR/ramdisk.gz
+		~/bin/mkbootimg --kernel $BUILD_TOP_DIR/okernel/*$2/zImage --ramdisk $PACKAGEDIR/ramdisk.gz --cmdline "$CMD_LINE" --base 0x00000000 --pagesize 2048 --kernel_offset 0x00008000 --tags_offset 0x01E00000 --ramdisk_offset 0x02000000 --dt $BUILD_TOP_DIR/okernel/*$2/dt.img --output $PACKAGEDIR/boot.img
+		echo -n "SEANDROIDENFORCE" >> $PACKAGEDIR/boot.img
+		export curdate=`date "+%m-%d-%Y-%H%M"`
+		cd $PACKAGEDIR
+		rm ramdisk.gz
+		zip -r ../../../$2_TW502-$curdate.zip .
 		exit 1
 		;;
 
@@ -205,7 +223,8 @@ FUNC_EXT_MODULES_TARGET()
 	rm -rf $OUT_MODU
 	mkdir -p $OUT_MODU
 	find $BUILD_KERNEL_OUT_DIR -name "*.ko" -exec cp -fv {} $OUT_MODU \;
-	cd $BUILD_TOP_DIR/mkernel/$PROJECT_NAME
+	$STRIP --strip-unneeded $OUT_MODU/*.ko
+	cd $BUILD_TOP_DIR/mkernel/$BUILD_COMMAND
 	mkdir pronto
 	mv wlan.ko pronto/pronto_wlan.ko
 	echo "wlan.ko renamed and moved to pronto/pronto_wlan.ko"
