@@ -106,11 +106,13 @@ int selinux_enforcing;
 
 static int __init enforcing_setup(char *str)
 {
-	unsigned long enforcing;
-	if (!strict_strtoul(str, 0, &enforcing))
-#ifdef CONFIG_ALWAYS_ENFORCE
-		selinux_enforcing = 1;
+#if defined(SECURITY_SELINUX_ALWAYS_ENFORCE)
+	selinux_enforcing = 1;
+#elif defined(SECURITY_SELINUX_NEVER_ENFORCE)
+	selinux_enforcing = 0;
 #else
+	unsigned long enforcing;
+	if (!kstrtoul(str, 0, &enforcing))
 		selinux_enforcing = enforcing ? 1 : 0;
 #endif
 	return 1;
@@ -125,11 +127,7 @@ static int __init selinux_enabled_setup(char *str)
 {
 	unsigned long enabled;
 	if (!strict_strtoul(str, 0, &enabled))
-#ifdef CONFIG_ALWAYS_ENFORCE
-		selinux_enabled = 1;
-#else
 		selinux_enabled = enabled ? 1 : 0;
-#endif
 	return 1;
 }
 __setup("selinux=", selinux_enabled_setup);
@@ -4708,11 +4706,7 @@ static int selinux_nlmsg_perm(struct sock *sk, struct sk_buff *skb)
 				  "SELinux:  unrecognized netlink message"
 				  " type=%hu for sclass=%hu\n",
 				  nlh->nlmsg_type, sksec->sclass);
-#ifdef CONFIG_ALWAYS_ENFORCE
-			if (security_get_allow_unknown())
-#else
 			if (!selinux_enforcing || security_get_allow_unknown())
-#endif
 				err = 0;
 		}
 
@@ -5963,9 +5957,6 @@ static __init int selinux_init(void)
 	if (avc_add_callback(selinux_netcache_avc_callback, AVC_CALLBACK_RESET))
 		panic("SELinux: Unable to register AVC netcache callback\n");
 
-#ifdef CONFIG_ALWAYS_ENFORCE
-	selinux_enforcing = 1;
-#endif
 	if (selinux_enforcing)
 		printk(KERN_DEBUG "SELinux:  Starting in enforcing mode\n");
 	else
@@ -6042,9 +6033,6 @@ static struct nf_hook_ops selinux_ipv6_ops[] = {
 static int __init selinux_nf_ip_init(void)
 {
 	int err = 0;
-#ifdef CONFIG_ALWAYS_ENFORCE
-	selinux_enabled = 1;
-#endif
 	if (!selinux_enabled)
 		goto out;
 
