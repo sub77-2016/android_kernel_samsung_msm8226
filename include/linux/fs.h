@@ -25,6 +25,8 @@
 #undef NR_OPEN
 #define INR_OPEN_CUR 1024	/* Initial setting for nfile rlimits */
 #define INR_OPEN_MAX 4096	/* Hard limit for nfile rlimits */
+struct fscrypt_info;
+struct fscrypt_operations;
 
 #define BLOCK_SIZE_BITS 10
 #define BLOCK_SIZE (1<<BLOCK_SIZE_BITS)
@@ -858,6 +860,11 @@ struct inode {
 #ifdef CONFIG_IMA
 	atomic_t		i_readcount; /* struct files open RO */
 #endif
+
+#if IS_ENABLED(CONFIG_FS_ENCRYPTION)
+	struct fscrypt_info	*i_crypt_info;
+#endif
+
 	void			*i_private; /* fs or device private pointer */
 };
 
@@ -1452,6 +1459,9 @@ struct super_block {
 	const struct xattr_handler **s_xattr;
 
 	struct list_head	s_inodes;	/* all inodes */
+
+	const struct fscrypt_operations	*s_cop;
+
 	struct hlist_bl_head	s_anon;		/* anonymous dentries for (nfs) exporting */
 #ifdef CONFIG_SMP
 	struct list_head __percpu *s_files;
